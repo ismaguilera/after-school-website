@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casa Taller Amelie | After School</title>
+    <meta name="description"
+        content="After School Casa Taller Amelie - Un espacio donde niñas y niños juegan, crean y se sienten acompañados después del colegio en Ñuñoa.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Nunito:wght@400;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Spline 3D Viewer (for future interactive 3D scenes) -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Floating Decorative Particles (Spline-inspired) -->
+    <div class="floating-particles" aria-hidden="true">
+        <span class="particle">⭐</span>
+        <span class="particle">🎨</span>
+        <span class="particle">🎵</span>
+        <span class="particle">💜</span>
+        <span class="particle">🌈</span>
+        <span class="particle">✏️</span>
+        <span class="particle">🦋</span>
+        <span class="particle">☀️</span>
+        <span class="particle">🌸</span>
+        <span class="particle">📖</span>
+    </div>
+
+    <header class="navbar">
+        <a href="#about" class="logo">
+            <img src="assets/logo.jpg" alt="Casa Taller Amelie - Con el calor de tu hogar" class="logo-img">
+        </a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+            <i class="ph ph-list"></i>
+        </button>
+        <nav id="navMenu">
+            <a href="#about">Nosotros</a>
+            <a href="#why-us">Por qué elegirnos</a>
+            <a href="#activities">Actividades</a>
+            <a href="#day">Un Día</a>
+            <a href="#schedule">Horarios</a>
+            <a href="#contact" class="btn-primary">Contáctanos</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="about">
+            <div class="hero-content">
+                <div class="badges-wrapper">
+                    <span class="badge">Inscripciones Abiertas 2026</span>
+                    <span class="badge badge-urgent">Cupos Limitados - Inscripciones 2026</span>
+                </div>
+                <h2>El mejor <span class="highlight">After School</span> para tus hijos</h2>
+                <p class="subtitle">
+                    Un espacio donde niñas y niños de 4 a 10 años juegan, crean y se sienten acompañados después del
+                    colegio.
+                </p>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn-primary">Reserva un Cupo</a>
+                    <a href="#activities" class="btn-secondary">Saber Más</a>
+                </div>
+            </div>
+            <div class="hero-image-wrapper">
+                <div class="hero-3d-scene" id="hero3dScene">
+                    <!-- 3D House -->
+                    <div class="house-3d" data-depth="0.3">
+                        <div class="house-roof">
+                            <div class="roof-front"></div>
+                            <div class="roof-back"></div>
+                        </div>
+                        <div class="house-body">
+                            <div class="house-wall wall-front">
+                                <div class="house-door">
+                                    <div class="door-knob"></div>
+                                </div>
+                                <div class="house-window window-left">
+                                    <div class="window-pane"></div>
+                                    <div class="window-pane"></div>
+                                </div>
+                                <div class="house-window window-right">
+                                    <div class="window-pane"></div>
+                                    <div class="window-pane"></div>
+                                </div>
+                                <div class="house-sign">Amelie</div>
+                            </div>
+                            <div class="house-wall wall-side"></div>
+                        </div>
+                        <div class="house-base"></div>
+                        <!-- Photo frame integrated into scene -->
+                        <div class="house-photo-frame">
+                            <img src="assets/Casa Taller Amelie - After School 2026.png"
+                                alt="Niños en Casa Taller Amelie">
+                        </div>
+                        <div class="chimney">
+                            <div class="smoke smoke-1"></div>
+                            <div class="smoke smoke-2"></div>
+                            <div class="smoke smoke-3"></div>
+                        </div>
+                    </div>
+
+                    <!-- Floating Creative Elements -->
+                    <div class="floating-element fe-1" data-depth="0.6"><i class="ph ph-paint-brush"></i></div>
+                    <div class="floating-element fe-2" data-depth="0.4"><i class="ph ph-music-notes"></i></div>
+                    <div class="floating-element fe-3" data-depth="0.8"><i class="ph ph-star"></i></div>
+                    <div class="floating-element fe-4" data-depth="0.5"><i class="ph ph-book-open"></i></div>
+                    <div class="floating-element fe-5" data-depth="0.7"><i class="ph ph-puzzle-piece"></i></div>
+                    <div class="floating-element fe-6" data-depth="0.3"><i class="ph ph-cookie"></i></div>
+                    <div class="floating-element fe-7" data-depth="0.9"><i class="ph ph-heart"></i></div>
+                    <div class="floating-element fe-8" data-depth="0.5"><i class="ph ph-cloud"></i></div>
+
+                    <!-- Warm glow -->
+                    <div class="warm-glow" data-depth="0.1"></div>
+                </div>
+            </div>
+        </section>
+
+        <div class="custom-shape-divider-bottom">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none" style="transform: rotateX(180deg);">
+                <path
+                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                    class="shape-fill" style="fill: #FCD5F7;"></path>
+            </svg>
+        </div>
+
+        <section class="why-us" id="why-us">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Por qué <span class="highlight">elegirnos</span></h2>
+                    <p>Sabemos lo importante que es para ti dejar a tus hijos en un lugar de confianza.</p>
+                </div>
+                <div class="why-us-grid">
+                    <div class="why-card">
+                        <div class="why-icon">
+                            <i class="ph ph-shield-check"></i>
+                        </div>
+                        <h3>Espacio Seguro</h3>
+                        <p>Ambiente protegido y supervisado constantemente para tu tranquilidad.</p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-icon">
+                            <i class="ph ph-heart"></i>
+                        </div>
+                        <h3>Atención Personalizada</h3>
+                        <p>Grupos reducidos que permiten cuidar a cada niño de manera individual.</p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-icon">
+                            <i class="ph ph-palette"></i>
+                        </div>
+                        <h3>Aprendizaje Lúdico</h3>
+                        <p>Talleres creativos donde aprenden jugando y desarrollando su imaginación.</p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-icon">
+                            <i class="ph ph-clock"></i>
+                        </div>
+                        <h3>Flexibilidad Horaria</h3>
+                        <p>Retiro incluido desde el colegio y cuidado hasta el final de la tarde.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="activities" id="activities">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Nuestras <span class="highlight-blue">Actividades</span></h2>
+                    <p>Fomentamos el aprendizaje, la creatividad y la diversión a través de talleres diseñados
+                        especialmente para su edad.</p>
+                </div>
+
+                <div class="grid-activities">
+                    <div class="activity-card">
+                        <div class="icon-wrap bg-yellow"><i class="ph ph-palette"></i></div>
+                        <h3>Talleres creativos</h3>
+                        <p>Desarrollando la imaginación sin límites.</p>
+                        <span class="age-badge">4-10 años</span>
+                    </div>
+                    <div class="activity-card">
+                        <div class="icon-wrap bg-blue"><i class="ph ph-puzzle-piece"></i></div>
+                        <h3>Juegos de mesa</h3>
+                        <p>Aprender estrategia y trabajo en equipo.</p>
+                        <span class="age-badge">5-10 años</span>
+                    </div>
+                    <div class="activity-card">
+                        <div class="icon-wrap bg-pink"><i class="ph ph-cooking-pot"></i></div>
+                        <h3>Cocina entretenida</h3>
+                        <p>Pequeños chefs descubriendo sabores.</p>
+                        <span class="age-badge">5-10 años</span>
+                    </div>
+                    <div class="activity-card">
+                        <div class="icon-wrap bg-green"><i class="ph ph-hand-soap"></i></div>
+                        <h3>Arte y cerámica</h3>
+                        <p>Expresión a través del modelado.</p>
+                        <span class="age-badge">4-10 años</span>
+                    </div>
+                    <div class="activity-card">
+                        <div class="icon-wrap bg-purple"><i class="ph ph-music-notes"></i></div>
+                        <h3>Música y teatro</h3>
+                        <p>Expresión corporal y rítmica.</p>
+                        <span class="age-badge">4-10 años</span>
+                    </div>
+                    <div class="activity-card">
+                        <div class="icon-wrap bg-orange"><i class="ph ph-baseball"></i></div>
+                        <h3>Juego libre y guiado</h3>
+                        <p>Moviéndose y explorando alegremente.</p>
+                        <span class="age-badge">4-10 años</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials" id="testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Lo que dicen los <span class="highlight">papás</span></h2>
+                    <p>La confianza de las familias es nuestra mejor recompensa.</p>
+                </div>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-photo">
+                            <i class="ph ph-user-circle"></i>
+                        </div>
+                        <p class="testimonial-text">"Mi hija ama ir todos los días. Las tías son súper cariñosas y las
+                            actividades son muy variadas. Totalmente recomendado."</p>
+                        <div class="testimonial-author">
+                            <h4>Carolina M.</h4>
+                            <span>Mamá de Sofía, 6 años</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-photo">
+                            <i class="ph ph-user-circle"></i>
+                        </div>
+                        <p class="testimonial-text">"El retiro del colegio me da una tranquilidad enorme. Sé que mi hijo
+                            está bien cuidado mientras termino mi jornada laboral."</p>
+                        <div class="testimonial-author">
+                            <h4>Roberto G.</h4>
+                            <span>Papá de Matías, 8 años</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-photo">
+                            <i class="ph ph-user-circle"></i>
+                        </div>
+                        <p class="testimonial-text">"Desde que llegó a Casa Taller Amelie, mi hija ha desarrollado su
+                            creatividad de forma increíble. ¡No quiere irse!"</p>
+                        <div class="testimonial-author">
+                            <h4>Andrea L.</h4>
+                            <span>Mamá de Valentina, 5 años</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Un Día en Amelie Timeline Section -->
+        <section class="day-timeline" id="day">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Un Día en <span class="highlight">Amelie</span></h2>
+                    <p>Así vive tu hijo/a cada tarde en nuestra casa taller. Un recorrido de creatividad, juego y
+                        cariño.</p>
+                </div>
+                <div class="timeline-wrapper">
+                    <div class="timeline-line" aria-hidden="true">
+                        <div class="timeline-line-fill"></div>
+                    </div>
+                    <div class="timeline-items">
+                        <div class="timeline-item">
+                            <div class="timeline-dot">
+                                <i class="ph ph-van"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <span class="timeline-time">15:00</span>
+                                <h3>Retiro del Colegio</h3>
+                                <p>Los retiramos directamente del LMS con total seguridad. Caminamos juntos hasta la
+                                    casa taller, siempre acompañados.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot dot-pink">
+                                <i class="ph ph-cookie"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <span class="timeline-time">15:30</span>
+                                <h3>Colación y Descanso</h3>
+                                <p>Momento para recargar energías con su colación en un ambiente tranquilo y acogedor.
+                                    Supervisamos que todos coman bien.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot dot-yellow">
+                                <i class="ph ph-paint-brush"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <span class="timeline-time">16:00</span>
+                                <h3>Taller Creativo del Día</h3>
+                                <p>Arte, cerámica, cocina, música o teatro. Cada día una actividad diferente que
+                                    despierta su imaginación y desarrolla nuevas habilidades.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot dot-green">
+                                <i class="ph ph-soccer-ball"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <span class="timeline-time">17:00</span>
+                                <h3>Juego Libre y Guiado</h3>
+                                <p>Tiempo para moverse, explorar y socializar. Juegos de mesa, actividades al aire libre
+                                    y diversión en equipo.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot dot-purple">
+                                <i class="ph ph-house-line"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <span class="timeline-time">18:00 – 18:30</span>
+                                <h3>Cierre y Despedida</h3>
+                                <p>Recogemos, ordenamos y preparamos todo para la llegada de los papás. ¡Nos despedimos
+                                    con una sonrisa hasta mañana!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="custom-shape-divider-top">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none" style="transform: rotateX(180deg);">
+                <path
+                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                    class="shape-fill" style="fill: #D4F4FF;"></path>
+            </svg>
+        </div>
+
+        <section class="schedule" id="schedule">
+            <div class="schedule-container">
+                <div class="schedule-text">
+                    <h2>Nuestros <span class="highlight">Horarios</span></h2>
+                    <p>Ofrecemos retiro seguro desde el LMS y cuidado hasta el final de la tarde para tu tranquilidad.
+                    </p>
+
+                    <div class="time-block">
+                        <div class="time-header">
+                            <i class="ph ph-calendar-blank"></i>
+                            <h3>Lunes a Jueves</h3>
+                        </div>
+                        <ul class="time-details">
+                            <li><strong>Retiro en LMS:</strong> 15:00 hrs. (Ciclo 1) / 15:15 hrs. (Ciclo 2)</li>
+                            <li><strong>Cierre:</strong> Hasta las 18:30 hrs.</li>
+                        </ul>
+                    </div>
+
+                    <div class="time-block">
+                        <div class="time-header">
+                            <i class="ph ph-calendar-star"></i>
+                            <h3>Viernes</h3>
+                        </div>
+                        <ul class="time-details">
+                            <li><strong>Retiro en LMS:</strong> 13:00 hrs. (Ciclo 1 y 2)</li>
+                            <li><strong>Cierre:</strong> Hasta las 18:30 hrs.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="schedule-image" style="aspect-ratio: 4/5; width: 100%; min-height: 350px;">
+                    <div style="overflow: hidden; border-radius: 30px; width: 100%; height: 100%;">
+                        <iframe
+                            src="https://www.google.com/maps/d/u/0/embed?mid=11JulsQi5QFn5yRck3ibCoWf2ny05-hY&ehbc=2E312F&noprof=1"
+                            width="100%" style="border:0; margin-top: -60px; height: calc(100% + 60px);"
+                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq" id="faq">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Preguntas <span class="highlight-blue">Frecuentes</span></h2>
+                    <p>Resolvemos tus dudas más comunes sobre nuestro servicio.</p>
+                </div>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Qué edades aceptan en Casa Taller Amelie?</span>
+                            <i class="ph ph-caret-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Aceptamos niños y niñas de 4 a 10 años. Adaptamos las actividades según el grupo etario
+                                para garantizar que cada niño tenga una experiencia adecuada a su desarrollo.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Debo enviar colación a mi hijo/a?</span>
+                            <i class="ph ph-caret-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Sí, te pedimos que envíes una colación saludable. Nosotros nos encargamos de supervisar
+                                que todos los niños coman adecuadamente en los horarios establecidos.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Cómo funciona el retiro desde el colegio?</span>
+                            <i class="ph ph-caret-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Realizamos el retiro directamente desde el LMS en los horarios de salida de cada ciclo.
+                                Los niños son trasladados caminando hasta nuestra casa taller, que queda muy cerca del
+                                colegio.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Cómo puedo inscribir a mi hijo/a?</span>
+                            <i class="ph ph-caret-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Puedes contactarnos por WhatsApp o Instagram para agendar una visita. Te mostraremos
+                                nuestras instalaciones y resolveremos todas tus dudas antes de formalizar la
+                                inscripción.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <div class="footer-wave">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none" style="transform: rotateX(180deg);">
+                <path
+                    d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
+                    opacity=".25" class="shape-fill"></path>
+                <path
+                    d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,51.23,14.69,100.09,10.47,147.74-12.72V0Z"
+                    opacity=".5" class="shape-fill"></path>
+                <path
+                    d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
+                    class="shape-fill"></path>
+            </svg>
+        </div>
+        <div class="footer-content container">
+            <div class="footer-brand">
+                <h2>Casa Taller <span class="highlight-inline">Amelie</span></h2>
+                <p>Con el calor de tu hogar</p>
+                <p class="description">Brindamos un espacio seguro cálido y creativo para el desarrollo integral de tu
+                    hijo/a después de sus clases escolares.</p>
+            </div>
+            <div class="footer-contact">
+                <h3>Contáctanos</h3>
+                <ul>
+                    <li>
+                        <i class="ph ph-map-pin"></i>
+                        <span>Santa Julia 722, Ñuñoa</span>
+                    </li>
+                    <li>
+                        <i class="ph ph-whatsapp-logo"></i>
+                        <a href="https://wa.me/56959127198" target="_blank">+569 5912 7198</a>
+                    </li>
+                    <li>
+                        <i class="ph ph-instagram-logo"></i>
+                        <a href="https://instagram.com/casataller_amelie" target="_blank">@casataller_amelie</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Casa Taller Amelie. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Mascota Amelie (Colibrí interactivo) -->
+    <div class="mascot-container" id="mascotContainer">
+        <div class="mascot-speech" id="mascotSpeech">
+            <p id="mascotText">¡Hola! Soy Amelie 🌸 ¡Bienvenido a nuestra casa taller!</p>
+            <button class="speech-close" id="speechClose" aria-label="Cerrar mensaje">✕</button>
+        </div>
+        <div class="mascot-character" id="mascotCharacter">
+            <img src="assets/mascota.png" alt="Amelie, la mascota colibrí" class="mascot-img" draggable="false">
+            <div class="mascot-glow"></div>
+        </div>
+    </div>
+
+    <a href="https://wa.me/56959127198" class="whatsapp-float" target="_blank" aria-label="Contactar por WhatsApp">
+        <i class="ph ph-whatsapp-logo"></i>
+    </a>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
