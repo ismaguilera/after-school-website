@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Select ALL animatable elements
     const animatableElements = document.querySelectorAll(
-        '.activity-card, .time-block, .why-card, .testimonial-card, .faq-item'
+        '.activity-card, .time-block, .why-card, .testimonial-card, .faq-item, .pricing-card, .conocenos-video-wrapper, .conocenos-content > *'
     );
 
     animatableElements.forEach((el, index) => {
@@ -153,8 +153,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 currentY += (0 - currentY) * 0.05;
 
                 if (house3d) {
-                    const rotY = -12 + currentX * 15;
-                    const rotX = 5 + currentY * -10;
+                    const rotY = -12 + currentX * 45;
+                    const rotX = 5 + currentY * -30;
                     house3d.style.transform = `translate(-50%, -50%) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
                 }
 
@@ -196,8 +196,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Rotate house
             if (house3d) {
-                const rotY = -12 + currentX * 15;
-                const rotX = 5 + currentY * -10;
+                const rotY = -12 + currentX * 45;
+                const rotX = 5 + currentY * -30;
                 house3d.style.transform = `translate(-50%, -50%) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
             }
 
@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 6. Timeline Scroll Reveal & Line Fill (Un Día en Amelie)
     // =========================================================================
     const timelineItems = document.querySelectorAll('.timeline-item');
-    const timelineSection = document.querySelector('.day-timeline');
+    const timelineSection = document.querySelector('.ruta-amelie');
     const timelineLineFill = document.querySelector('.timeline-line-fill');
 
     if (timelineItems.length > 0) {
@@ -262,32 +262,248 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // =========================================================================
     // 7. 3D Tilt Effect on Activity Cards (Spline-inspired)
+    //    Disabled on touch devices to avoid conflicts with carousel swipe
     // =========================================================================
+    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
     const activityCards = document.querySelectorAll('.activity-card');
 
-    activityCards.forEach(card => {
-        card.style.transformStyle = 'preserve-3d';
-        card.style.perspective = '1000px';
+    if (!isTouchDevice) {
+        activityCards.forEach(card => {
+            card.style.transformStyle = 'preserve-3d';
+            card.style.perspective = '1000px';
 
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
 
-            const rotateX = ((y - centerY) / centerY) * -8;
-            const rotateY = ((x - centerX) / centerX) * 8;
+                const rotateX = ((y - centerY) / centerY) * -8;
+                const rotateY = ((x - centerX) / centerX) * 8;
 
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
-            card.style.transition = 'transform 0.1s ease-out';
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
+                card.style.transition = 'transform 0.1s ease-out';
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
+                card.style.transition = 'transform 0.5s ease-out';
+            });
+        });
+    }
+
+    // =========================================================================
+    // 7b. 3D House Touch Interactivity (Mobile)
+    // =========================================================================
+    if (isTouchDevice && hero3dScene && heroSection) {
+        const house3dTouch = hero3dScene.querySelector('.house-3d');
+        const touchHint = document.getElementById('touchHint');
+        let touchStartX = 0, touchStartY = 0;
+        let touchCurrentX = 0, touchCurrentY = 0;
+        let isTouching = false;
+
+        hero3dScene.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                isTouching = true;
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                if (house3dTouch) house3dTouch.style.animation = 'none';
+                // Hide touch hint after first interaction
+                if (touchHint) touchHint.classList.add('hidden');
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        hero3dScene.addEventListener('touchmove', (e) => {
+            if (!isTouching || e.touches.length !== 1) return;
+            e.preventDefault();
+
+            const deltaX = (e.touches[0].clientX - touchStartX) / 100;
+            const deltaY = (e.touches[0].clientY - touchStartY) / 100;
+
+            touchCurrentX = Math.max(-1, Math.min(1, deltaX));
+            touchCurrentY = Math.max(-1, Math.min(1, deltaY));
+
+            if (house3dTouch) {
+                const rotY = -12 + touchCurrentX * 60;
+                const rotX = 5 + touchCurrentY * -40;
+                house3dTouch.style.transform = `translate(-50%, -50%) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+            }
+
+            // Move floating elements
+            const floatingEls = hero3dScene.querySelectorAll('.floating-element');
+            floatingEls.forEach(el => {
+                const depth = parseFloat(el.dataset.depth) || 0.5;
+                const moveX = touchCurrentX * 30 * depth;
+                const moveY = touchCurrentY * 20 * depth;
+                el.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+        }, { passive: false });
+
+        hero3dScene.addEventListener('touchend', () => {
+            isTouching = false;
+            // Smoothly return to default position
+            if (house3dTouch) {
+                house3dTouch.style.transition = 'transform 0.8s ease-out';
+                house3dTouch.style.transform = '';
+                setTimeout(() => {
+                    house3dTouch.style.transition = '';
+                    house3dTouch.style.animation = '';
+                }, 800);
+            }
+            const floatingEls = hero3dScene.querySelectorAll('.floating-element');
+            floatingEls.forEach(el => {
+                el.style.transition = 'transform 0.5s ease-out';
+                el.style.transform = '';
+                setTimeout(() => { el.style.transition = ''; }, 500);
+            });
         });
 
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
-            card.style.transition = 'transform 0.5s ease-out';
+        // Auto-hide touch hint after 6 seconds
+        if (touchHint) {
+            setTimeout(() => {
+                touchHint.classList.add('hidden');
+            }, 6000);
+        }
+    }
+
+    // =========================================================================
+    // 8. Mobile Carousel Dot Tracking & Click Navigation
+    // =========================================================================
+    const carousels = document.querySelectorAll('[data-carousel]');
+
+    carousels.forEach(carousel => {
+        const carouselName = carousel.dataset.carousel;
+        const dotsContainer = document.querySelector(`.carousel-dots[data-for="${carouselName}"]`);
+        if (!dotsContainer) return;
+
+        const dots = dotsContainer.querySelectorAll('.carousel-dot');
+        const cards = Array.from(carousel.children);
+
+        // Track scroll position to update dots
+        const observerOptions = {
+            root: carousel,
+            rootMargin: '0px',
+            threshold: 0.6
+        };
+
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const index = cards.indexOf(entry.target);
+                    if (index >= 0) {
+                        dots.forEach(d => d.classList.remove('active'));
+                        if (dots[index]) dots[index].classList.add('active');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        cards.forEach(card => cardObserver.observe(card));
+
+        // Click dot to scroll to card
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const index = parseInt(dot.dataset.index);
+                if (cards[index]) {
+                    cards[index].scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'nearest',
+                        inline: 'center'
+                    });
+                }
+            });
         });
+
+        // Arrow Navigation
+        const wrapper = carousel.closest('.carousel-wrapper');
+        if (wrapper) {
+            const prevBtn = wrapper.querySelector('.carousel-nav.prev');
+            const nextBtn = wrapper.querySelector('.carousel-nav.next');
+
+            if (prevBtn && nextBtn) {
+                const getScrollAmount = () => {
+                    const firstCard = cards[0];
+                    // Compute card width + gap (approx 24px/1.5rem)
+                    return firstCard ? firstCard.offsetWidth + 24 : 320;
+                };
+
+                prevBtn.addEventListener('click', () => {
+                    carousel.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+                });
+
+                nextBtn.addEventListener('click', () => {
+                    carousel.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+                });
+            }
+        }
     });
+
+    // =========================================================================
+    // 8b. Timeline Activities Grid Navigation (Ruta Amelie)
+    // =========================================================================
+    const timelineGrids = document.querySelectorAll('.timeline-activities-grid');
+
+    timelineGrids.forEach(grid => {
+        const wrapper = grid.closest('.carousel-wrapper');
+        if (!wrapper) return;
+
+        const prevBtn = wrapper.querySelector('.carousel-nav.prev');
+        const nextBtn = wrapper.querySelector('.carousel-nav.next');
+        const firstCard = grid.querySelector('.activity-card');
+
+        if (prevBtn && nextBtn && firstCard) {
+            const getScrollAmount = () => {
+                // Card width + 1.5rem gap (approx 24px)
+                return firstCard.offsetWidth + 24;
+            };
+
+            prevBtn.addEventListener('click', () => {
+                grid.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+            });
+
+            nextBtn.addEventListener('click', () => {
+                grid.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+            });
+        }
+    });
+
+    // Timeline dots (uses timeline-wrapper as scroll container)
+    const timelineWrapper = document.querySelector('.timeline-wrapper');
+    const timelineDots = document.querySelector('.carousel-dots[data-for="timeline"]');
+
+    if (timelineWrapper && timelineDots) {
+        const tlDots = timelineDots.querySelectorAll('.carousel-dot');
+        const tlItems = Array.from(timelineWrapper.querySelectorAll('.timeline-item'));
+
+        const tlObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const index = tlItems.indexOf(entry.target);
+                    if (index >= 0) {
+                        tlDots.forEach(d => d.classList.remove('active'));
+                        if (tlDots[index]) tlDots[index].classList.add('active');
+                    }
+                }
+            });
+        }, { root: timelineWrapper, threshold: 0.6 });
+
+        tlItems.forEach(item => tlObserver.observe(item));
+
+        tlDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const index = parseInt(dot.dataset.index);
+                if (tlItems[index]) {
+                    tlItems[index].scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'nearest',
+                        inline: 'center'
+                    });
+                }
+            });
+        });
+    }
 
     // =========================================================================
     // 9. Mascota Amelie — Scroll-Aware Speech Bubbles
@@ -306,13 +522,27 @@ document.addEventListener("DOMContentLoaded", () => {
         const sectionMessages = {
             'about': '¡Hola! Soy Amelie 🌸 ¡Te doy la bienvenida a nuestro sitio web!',
             'why-us': '¿Sabías que somos el after school más cálido? 🏡 ¡Los papás confían en nosotros!',
-            'activities': '🎨 ¡Me encantan los talleres! Cada día hacemos algo diferente y divertido.',
-            'testimonials': '💜 ¡Mira lo que dicen los papás! Sus palabras nos llenan de alegría.',
-            'day': '🕐 Así es un día típico conmigo... ¡Nunca nos aburrimos!',
+            'ruta-amelie': '🕐 Así es nuestra ruta diaria ¡Me encantan los talleres! 🎨',
+            'gallery': '👀 ¡Esto hacemos en nuestro after school! 📸',
+            'testimonials': '💜 La satisfacción de las mamás y los papás nos llena de alegría.',
+            'instagram-community': '😮 Nos sorprende el afecto en redes sociales.',
+            'conocenos': '✨ ¡Conoce a nuestra fundadora! Ella creó este hermoso espacio de amor.',
             'schedule': '📅 ¡Apúrate, los cupos son limitados! Inscribe a tus hijos pronto.',
+            'pricing': '💰 ¡Tenemos planes para todas las familias! Elige el que más te convenga.',
             'faq': '🤔 ¿Tienes dudas? ¡Aquí encuentras las respuestas más comunes!',
             'contact': '📱 ¡Escríbenos por WhatsApp! Estamos felices de ayudarte 😊'
         };
+
+        // Auto-minimize on mobile after 5 seconds
+        if (window.innerWidth <= 768) {
+            setTimeout(() => {
+                if (speechVisible) {
+                    mascotSpeech.classList.add('hidden');
+                    mascotContainer.classList.add('speech-closed');
+                    speechVisible = false;
+                }
+            }, 5000);
+        }
 
         // Close speech bubble
         if (speechClose) {
@@ -370,3 +600,4 @@ document.addEventListener("DOMContentLoaded", () => {
         sections.forEach(section => sectionObserver.observe(section));
     }
 });
+
