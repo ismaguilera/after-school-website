@@ -516,6 +516,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (mascotContainer && mascotSpeech && mascotText && mascotCharacter) {
         let speechVisible = true;
+        let isSpeechClosed = false;
         let currentSection = 'hero';
 
         // Section-specific messages
@@ -533,41 +534,59 @@ document.addEventListener("DOMContentLoaded", () => {
             'contact': '📱 ¡Escríbenos por WhatsApp! Estamos felices de ayudarte 😊'
         };
 
-        // Auto-minimize on mobile after 5 seconds
+        // Auto-minimize on mobile after 8 seconds (allows reading after 3.5s entrance)
         if (window.innerWidth <= 768) {
             setTimeout(() => {
-                if (speechVisible) {
+                if (speechVisible && !isSpeechClosed) {
+                    mascotSpeech.style.animation = 'none';
+                    mascotSpeech.style.transform = '';
                     mascotSpeech.classList.add('hidden');
                     mascotContainer.classList.add('speech-closed');
                     speechVisible = false;
                 }
-            }, 5000);
+            }, 8000);
         }
 
         // Close speech bubble
         if (speechClose) {
             speechClose.addEventListener('click', (e) => {
+                e.preventDefault();
                 e.stopPropagation();
+                mascotSpeech.style.animation = 'none'; // Clear CSS animation override
+                mascotSpeech.style.transform = ''; // Clear inline styles
                 mascotSpeech.classList.add('hidden');
                 mascotContainer.classList.add('speech-closed');
                 speechVisible = false;
+                isSpeechClosed = true; // Mark as closed by user
             });
         }
 
         // Click mascot to toggle speech
-        mascotCharacter.addEventListener('click', () => {
+        mascotCharacter.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            mascotSpeech.style.animation = 'none'; // Clear CSS animation override
+            mascotSpeech.style.transform = ''; // Clear inline styles
+
             if (!speechVisible) {
                 mascotSpeech.classList.remove('hidden');
                 mascotContainer.classList.remove('speech-closed');
                 speechVisible = true;
+                isSpeechClosed = false; // Reset if opened manually
                 // Wiggle animation
                 mascotCharacter.style.animation = 'none';
                 mascotCharacter.offsetHeight; // trigger reflow
                 mascotCharacter.style.animation = '';
+
+                // Ensure text is up to date immediately when reopening
+                if (sectionMessages[currentSection]) {
+                    mascotText.textContent = sectionMessages[currentSection];
+                }
             } else {
                 mascotSpeech.classList.add('hidden');
                 mascotContainer.classList.add('speech-closed');
                 speechVisible = false;
+                isSpeechClosed = true;
             }
         });
 
@@ -580,11 +599,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (sectionMessages[id] && id !== currentSection) {
                         currentSection = id;
                         // Animate text change
-                        if (speechVisible) {
+                        if (speechVisible && !isSpeechClosed) {
                             mascotSpeech.style.transform = 'scale(0.95)';
                             setTimeout(() => {
                                 mascotText.textContent = sectionMessages[id];
-                                mascotSpeech.style.transform = 'scale(1)';
+                                mascotSpeech.style.transform = ''; // Empty string so CSS handles it
                             }, 200);
                         } else {
                             mascotText.textContent = sectionMessages[id];
@@ -600,4 +619,34 @@ document.addEventListener("DOMContentLoaded", () => {
         sections.forEach(section => sectionObserver.observe(section));
     }
 });
+
+
+
+// Cookie Consent Logic
+document.addEventListener('DOMContentLoaded', () => {
+    const cookieBanner = document.getElementById('cookie-consent');
+    const acceptBtn = document.getElementById('accept-cookies');
+
+    if (!localStorage.getItem('cookieConsent')) {
+        cookieBanner.style.display = 'block';
+    }
+
+    acceptBtn.addEventListener('click', () => {
+        localStorage.setItem('cookieConsent', 'true');
+        cookieBanner.style.animation = 'slideDownCookie 0.5s forwards';
+        setTimeout(() => {
+            cookieBanner.style.display = 'none';
+        }, 500);
+    });
+});
+
+// Add slide down animation dynamically
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideDownCookie {
+    from { transform: translateY(0); }
+    to { transform: translateY(100%); }
+  }
+`;
+document.head.appendChild(style);
 
