@@ -50,9 +50,7 @@ body {
 
 h1,
 h2,
-h3,
-h4,
-h5 {
+h3 {
     font-family: var(--font-heading);
     color: var(--purple-dark);
     font-weight: 800;
@@ -1290,11 +1288,6 @@ ul {
     transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
-.timeline-item.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
 /* Alternating layout */
 .timeline-item:nth-child(odd) {
     flex-direction: row;
@@ -1553,12 +1546,6 @@ ul {
     color: var(--text-muted);
 }
 
-.grid-activities {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 2rem;
-}
-
 .activity-card {
     background: var(--white);
     padding: 2.5rem 2rem;
@@ -1592,10 +1579,6 @@ ul {
 
 .activity-card:hover .icon-wrap {
     transform: scale(1.1) rotate(10deg);
-}
-
-.bg-yellow {
-    background: var(--c-yellow);
 }
 
 .bg-blue {
@@ -1650,9 +1633,6 @@ ul {
 }
 
 /* Unique per-icon hover animations */
-.activity-card:hover .bg-yellow i {
-    animation: iconOscillate 0.6s ease-in-out infinite alternate;
-}
 
 .activity-card:hover .bg-blue i {
     animation: iconSpin 1.2s linear infinite;
@@ -1929,12 +1909,6 @@ ul {
 .testimonial-text::-webkit-scrollbar-thumb {
     background: var(--purple-main);
     border-radius: 4px;
-}
-
-.testimonial-author h4 {
-    font-size: 1.1rem;
-    color: var(--purple-dark);
-    margin-bottom: 0.2rem;
 }
 
 .testimonial-author span {
@@ -2216,34 +2190,6 @@ ul {
     line-height: 1;
 }
 
-.pricing-features {
-    list-style: none;
-    text-align: left;
-    width: 100%;
-    margin-bottom: 1.5rem;
-    flex-grow: 1;
-}
-
-.pricing-features li {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.5rem 0;
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    border-bottom: 1px solid rgba(184, 146, 252, 0.06);
-}
-
-.pricing-features li:last-child {
-    border-bottom: none;
-}
-
-.pricing-features li i {
-    color: var(--purple-main);
-    font-size: 1.2rem;
-    flex-shrink: 0;
-}
-
 .pricing-btn {
     width: 100%;
     text-align: center;
@@ -2439,11 +2385,6 @@ footer {
     color: var(--pink-mid);
 }
 
-.footer-map {
-    display: none;
-    /* Hide old map class */
-}
-
 /* Footer Newsletter */
 .footer-newsletter {
     flex: 1;
@@ -2546,18 +2487,6 @@ footer {
 
 .sib-form__declaration a:hover {
     color: var(--pink-soft) !important;
-}
-
-.footer-map-old {
-    flex: 1;
-    max-width: 400px;
-    min-width: 250px;
-}
-
-.footer-map h3 {
-    color: var(--white);
-    margin-bottom: 1rem;
-    font-size: 1.4rem;
 }
 
 .footer-bottom {
@@ -2831,11 +2760,6 @@ footer {
         justify-content: center;
     }
 
-    .blob-shape {
-        width: 350px;
-        height: 350px;
-    }
-
     .why-us-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -2858,11 +2782,6 @@ footer {
 
     .footer-contact ul li {
         justify-content: center;
-    }
-
-    .footer-map {
-        max-width: 100%;
-        width: 100%;
     }
 }
 
@@ -2896,10 +2815,6 @@ footer {
     }
 
     .why-us-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .grid-activities {
         grid-template-columns: 1fr;
     }
 
@@ -2994,7 +2909,8 @@ footer {
     color: var(--purple-dark);
     line-height: 1.4;
     margin: 0;
-    padding-right: 1.2rem;
+    padding-right: 2.2rem;
+    pointer-events: none;
 }
 
 .speech-close {
@@ -3124,10 +3040,6 @@ footer {
     transition: opacity 0.3s ease;
 }
 
-.mascot-container.speech-closed .mascot-character::after {
-    opacity: 1;
-}
-
 @keyframes notifyPulse {
 
     0%,
@@ -3188,7 +3100,6 @@ footer {
 
 /* --- Carousel Container --- */
 .why-us-grid,
-.grid-activities,
 .testimonials-grid,
 .pricing-grid,
 .gallery-grid {
@@ -3207,7 +3118,6 @@ footer {
 }
 
 .why-us-grid::-webkit-scrollbar,
-.grid-activities::-webkit-scrollbar,
 .testimonials-grid::-webkit-scrollbar,
 .pricing-grid::-webkit-scrollbar,
 .gallery-grid::-webkit-scrollbar {
@@ -3216,7 +3126,6 @@ footer {
 
 /* Card Widths & Snapping */
 .why-us-grid>*,
-.grid-activities>*,
 .testimonials-grid>*,
 .pricing-grid>*,
 .gallery-grid>* {
@@ -3231,7 +3140,6 @@ footer {
 @media (min-width: 1024px) {
 
     .why-us-grid>*,
-    .grid-activities>*,
     .testimonials-grid>*,
     .gallery-grid>* {
         width: calc((100% - 3rem) / 3) !important;
@@ -3248,7 +3156,6 @@ footer {
 @media (min-width: 768px) and (max-width: 1023px) {
 
     .why-us-grid>*,
-    .grid-activities>*,
     .testimonials-grid>*,
     .gallery-grid>* {
         width: calc((100% - 1.5rem) / 2) !important;
@@ -4118,4 +4025,36 @@ footer {
     .cookie-content button {
         width: 100%;
     }
+}
+/* ==========================================================================
+   Accessibility & Touch Targets
+   ========================================================================== */
+.carousel-dot {
+    position: relative;
+}
+.carousel-dot::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px;
+    height: 48px;
+    z-index: 1;
+}
+
+.carousel-nav {
+    min-width: 48px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-toggle {
+    min-width: 48px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

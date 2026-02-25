@@ -618,6 +618,74 @@ document.addEventListener("DOMContentLoaded", () => {
 
         sections.forEach(section => sectionObserver.observe(section));
     }
+
+    // =========================================================================
+    // 10. Analytics Tracking (GA4 & Meta Pixel)
+    // =========================================================================
+    
+    // Helper function to safely send events
+    const trackEvent = (eventName, eventParams = {}) => {
+        if (typeof gtag === 'function') {
+            gtag('event', eventName, eventParams);
+        }
+        if (typeof fbq === 'function') {
+            if (eventName === 'generate_lead') {
+                fbq('track', 'Lead', eventParams);
+            } else if (eventName === 'view_item_list') {
+                fbq('track', 'ViewContent', eventParams);
+            } else {
+                fbq('trackCustom', eventName, eventParams);
+            }
+        }
+    };
+
+    // 10.1 Track WhatsApp clicks
+    document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
+        link.addEventListener('click', () => {
+            trackEvent('generate_lead', {
+                method: 'whatsapp',
+                content_type: 'contact_button'
+            });
+        });
+    });
+
+    // 10.2 Track Pricing Plan clicks
+    document.querySelectorAll('.pricing-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const planCard = e.target.closest('.pricing-card');
+            const planName = planCard ? planCard.querySelector('h3').innerText : 'Unknown Plan';
+            
+            trackEvent('select_item', {
+                item_list_name: 'pricing_plans',
+                items: [{ item_name: planName }]
+            });
+            
+            // Re-trigger lead for WA intent with plan name
+            trackEvent('generate_lead', {
+                method: 'whatsapp_pricing',
+                plan_selected: planName
+            });
+        });
+    });
+
+    // 10.3 Track Form Submission Success (Brevo Form)
+    const successMessage = document.getElementById('success-message');
+    if (successMessage) {
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                    if (successMessage.style.display !== 'none' && !successMessage.dataset.tracked) {
+                        trackEvent('generate_lead', {
+                            method: 'newsletter_form_success',
+                            content_type: 'subscription'
+                        });
+                        successMessage.dataset.tracked = "true"; // Prevent double tracking
+                    }
+                }
+            });
+        });
+        observer.observe(successMessage, { attributes: true });
+    }
 });
 
 
