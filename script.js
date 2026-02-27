@@ -622,7 +622,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // =========================================================================
     // 10. Analytics Tracking (GA4 & Meta Pixel)
     // =========================================================================
-    
+
     // Helper function to safely send events
     const trackEvent = (eventName, eventParams = {}) => {
         if (typeof gtag === 'function') {
@@ -654,12 +654,12 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.addEventListener('click', (e) => {
             const planCard = e.target.closest('.pricing-card');
             const planName = planCard ? planCard.querySelector('h3').innerText : 'Unknown Plan';
-            
+
             trackEvent('select_item', {
                 item_list_name: 'pricing_plans',
                 items: [{ item_name: planName }]
             });
-            
+
             // Re-trigger lead for WA intent with plan name
             trackEvent('generate_lead', {
                 method: 'whatsapp_pricing',
@@ -668,23 +668,87 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // 10.3 Track Form Submission Success (Brevo Form)
-    const successMessage = document.getElementById('success-message');
-    if (successMessage) {
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                    if (successMessage.style.display !== 'none' && !successMessage.dataset.tracked) {
-                        trackEvent('generate_lead', {
-                            method: 'newsletter_form_success',
-                            content_type: 'subscription'
-                        });
-                        successMessage.dataset.tracked = "true"; // Prevent double tracking
+    // =========================================================================
+    // 11. Native Contact Form Submission with Cloudflare Worker
+    // =========================================================================
+    const contactForm = document.getElementById("contact-form");
+    const submitBtn = document.getElementById("contact-submit-btn");
+    const successMsg = document.getElementById("contact-success");
+    const errorMsg = document.getElementById("contact-error");
+
+    if (contactForm) {
+        contactForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            // Get form data
+            const name = document.getElementById("contact-name").value;
+            const email = document.getElementById("contact-email").value;
+            const phone = document.getElementById("contact-phone").value;
+            const message = document.getElementById("contact-message").value;
+
+            // Get Turnstile response
+            const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]')?.value;
+
+            if (!turnstileResponse) {
+                errorMsg.textContent = "Por favor, completa la verificación de seguridad (Captcha).";
+                errorMsg.style.display = "block";
+                successMsg.style.display = "none";
+                return;
+            }
+
+            // UI Feedback
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span>Enviando...</span> <i class="ph ph-spinner ph-spin" style="animation: spin 1s linear infinite;"></i><style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>';
+            submitBtn.disabled = true;
+            errorMsg.style.display = "none";
+            successMsg.style.display = "none";
+
+            try {
+                // Determine API URL based on environment
+                // Use production Cloudflare Worker URL:
+                const API_URL = "https://amelie-contact-form.ismael-aguilera.workers.dev";
+
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        phone,
+                        message,
+                        turnstileResponse
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    successMsg.textContent = "¡Hemos recibido tu mensaje! Gracias por contactarnos.";
+                    successMsg.style.display = "block";
+                    contactForm.reset();
+                    // Reset Turnstile widget
+                    if (window.turnstile) {
+                        window.turnstile.reset();
                     }
+
+                    // Analytics tracking for new form
+                    trackEvent('generate_lead', {
+                        method: 'contact_form_success',
+                        content_type: 'contact'
+                    });
+                } else {
+                    throw new Error(data.error || "Error al enviar el formulario.");
                 }
-            });
+            } catch (err) {
+                errorMsg.textContent = err.message || "Hubo un error de conexión. Inténtalo de nuevo.";
+                errorMsg.style.display = "block";
+            } finally {
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            }
         });
-        observer.observe(successMessage, { attributes: true });
     }
 });
 

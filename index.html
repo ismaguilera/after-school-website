@@ -943,74 +943,67 @@
 
             <div class="footer-newsletter"
                 style="width: 100%; max-width: 100%; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem;">
-                <h3>Sé parte de nuestra comunidad</h3>
-                <p>Déjanos tu correo para recibir novedades, promociones y conocer más sobre nuestra casa taller.</p>
-                <div id="sib-form-container" class="sib-form-container">
-                    <div id="error-message" class="form-feedback sib-form-message-panel" style="display:none;">
-                        <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
-                            <span class="sib-form-message-panel__inner-text">No hemos podido validar su correo.</span>
+                <h3>Escríbenos</h3>
+                <p style="margin-bottom: 25px;">Déjanos tu mensaje y nos pondremos en contacto contigo a la brevedad.
+                </p>
+
+
+                <div id="native-form-container" class="airmail-form-container">
+                    <div class="airmail-form-inner">
+                        <div id="contact-success" class="form-feedback-success"
+                            style="display:none; text-align: center; color: var(--green); padding: 10px; border-radius: 8px; font-weight: bold; background: rgba(0,255,0,0.1); margin-bottom: 20px;">
+                            ¡Hemos recibido tu mensaje! Gracias por contactarnos.
                         </div>
-                    </div>
-                    <div id="success-message" class="form-feedback-success sib-form-message-panel"
-                        style="display:none;">
-                        <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
-                            <span class="sib-form-message-panel__inner-text">Hemos recibido su correo. ¡Gracias!</span>
+                        <div id="contact-error" class="form-feedback"
+                            style="display:none; text-align: center; color: var(--pink-hot); padding: 10px; border-radius: 8px; font-weight: bold; background: rgba(255,0,0,0.1); margin-bottom: 20px;">
+                            Hubo un error al enviar el formulario. Inténtalo de nuevo.
                         </div>
-                    </div>
-                    <div id="sib-container" class="sib-container--medium sib-container--vertical"
-                        style="text-align:center; background-color:transparent; width:100%; direction:ltr">
-                        <form id="sib-form" method="POST"
-                            action="https://f7ecb83a.sibforms.com/serve/MUIFAL31Xjh61sMSZkvZAH-vkSnbA1DC2FRBs43FhvjkMrriffkwEpGvgCc4HiOeot0YQkPhEphoXXACHYI1OaK_LP1pDEIG9W693uQnFNxxtMwBWTxibCXm1v909HgWQ6NzELB0s2XVskW_ABdHfWkNKMiueweBG3hNgpcusF9qpsGAz2qM_97lMsDIuWFVQMvJi5Iq9D9A-4IvEQ=="
-                            data-type="subscription" class="lead-form">
-                            <div class="sib-input sib-form-block">
-                                <div class="form__entry entry_block">
-                                    <input type="email" id="EMAIL" name="EMAIL" autocomplete="off" class="input"
-                                        placeholder="Ingresa tu correo aquí" data-required="true" required>
+
+                        <form id="contact-form" class="custom-airmail-form">
+                            <div class="form-grid">
+                                <!-- Left Column -->
+                                <div class="form-col left">
+                                    <div class="form-group">
+                                        <label for="contact-name">Nombre</label>
+                                        <input type="text" id="contact-name" name="name" required
+                                            placeholder="Tu nombre">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contact-email">Correo</label>
+                                        <input type="email" id="contact-email" name="email" required
+                                            placeholder="tu@correo.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contact-phone">Teléfono (Opcional)</label>
+                                        <input type="tel" id="contact-phone" name="phone" placeholder="+56 9 1234 5678">
+                                    </div>
                                 </div>
-                                <label class="entry__error entry__error--primary"
-                                    style="font-size:14px; text-align:left; font-family:Helvetica, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949; margin-top:5px; display:none;">
-                                </label>
-                            </div>
 
-                            <button type="submit"
-                                class="btn-primary sib-form-block__button sib-form-block__button-with-loader"
-                                form="sib-form">
-                                <svg class="icon clickable__icon progress-indicator__icon sib-hide-loader-icon"
-                                    viewBox="0 0 512 512"
-                                    style="display: none; width: 1em; height: 1em; vertical-align: -0.125em; margin-right: 8px;">
-                                    <path
-                                        d="M460.116 373.846l-20.823-12.022c-5.541-3.199-7.54-10.159-4.663-15.874 30.137-59.886 28.343-131.652-5.386-189.946-33.641-58.394-94.896-95.833-161.827-99.676C261.028 55.961 256 50.751 256 44.352V20.309c0-6.904 5.808-12.337 12.703-11.982 83.556 4.306 160.163 50.864 202.11 123.677 42.063 72.696 44.079 162.316 6.031 236.832-3.14 6.148-10.75 8.461-16.728 5.01z"
-                                        fill="currentColor" />
-                                </svg>
-                                Más información
-                            </button>
-
-                            <div class="sib-captcha sib-form-block" style="width: 100%; margin-top: 10px;">
-                                <div class="form__entry entry_block">
-                                    <script>
-                                        function handleCaptchaResponse() {
-                                            var event = new Event('captchaChange');
-                                            document.getElementById('sib-captcha').dispatchEvent(event);
-                                            window.grecaptcha = window.turnstile;
-                                        }
-                                    </script>
-                                    <div class="cf-turnstile g-recaptcha" data-sitekey="0x4AAAAAAChK-Xo7PcVT_Y6d"
-                                        id="sib-captcha" data-callback="handleCaptchaResponse" data-language="es"></div>
+                                <!-- Right Column -->
+                                <div class="form-col right" style="display: flex; flex-direction: column;">
+                                    <div class="form-group"
+                                        style="flex-grow: 1; display: flex; flex-direction: column;">
+                                        <label for="contact-message">Mensaje</label>
+                                        <textarea id="contact-message" name="message" required
+                                            placeholder="¿En qué te podemos ayudar?"
+                                            style="flex-grow: 1; resize: vertical; min-height: 120px;"></textarea>
+                                    </div>
                                 </div>
-                                <label class="entry__error entry__error--primary"
-                                    style="font-size:14px; text-align:left; font-family:Helvetica, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949; margin-top:5px; display:none;">
-                                </label>
                             </div>
 
-                            <div class="sib-form__declaration"
-                                style="font-size: 0.8rem; color: #CDBDF5; margin-top: 15px; text-align: left;">
-                                Al enviar este formulario, aceptas que los datos se usarán para contactarte, según <a
-                                    target="_blank" href="https://www.brevo.com/es/legal/privacypolicy/"
-                                    style="color: var(--pink-mid); text-decoration: underline;">nuestra política</a>.
+                            <!-- Turnstile Widget centered -->
+                            <div class="form-group" style="display: flex; justify-content: center; margin-top: 10px;">
+                                <div class="cf-turnstile" data-sitekey="0x4AAAAAACi2XfbqlTXyLKfY" data-theme="light">
+                                </div>
                             </div>
-                            <input type="text" name="email_address_check" value="" class="input--hidden"
-                                style="display: none;">
-                            <input type="hidden" name="locale" value="es">
+
+                            <!-- Submit Button -->
+                            <div style="text-align: center;">
+                                <button type="submit" id="contact-submit-btn" class="btn-primary"
+                                    style="min-width: 220px; padding: 12px 30px; border: none; font-size: 1.1rem; cursor: pointer; display: inline-flex; justify-content: center; align-items: center; gap: 8px;">
+                                    <span>Enviar Mensaje</span>
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -1052,37 +1045,8 @@
         </div>
     </div>
 
-    <!-- START - We recommend to place the below code in footer or bottom of your website html  -->
-    <script>
-        window.REQUIRED_CODE_ERROR_MESSAGE = 'Elija un código de país';
-        window.LOCALE = 'es';
-        window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE = "La información que ha proporcionado no es válida. Compruebe el formato del campo e inténtelo de nuevo.";
-
-        window.REQUIRED_ERROR_MESSAGE = "Este campo no puede quedarse vacío. ";
-
-        window.GENERIC_INVALID_MESSAGE = "La información que ha proporcionado no es válida. Compruebe el formato del campo e inténtelo de nuevo.";
-
-
-
-
-        window.translation = {
-            common: {
-                selectedList: '{quantity} lista seleccionada',
-                selectedLists: '{quantity} listas seleccionadas',
-                selectedOption: '{quantity} seleccionado',
-                selectedOptions: '{quantity} seleccionados',
-            }
-        };
-
-        var AUTOHIDE = Boolean(1);
-    </script>
-
-    <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
-
+    <!-- Cloudflare Turnstile -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-
-    <!-- END - We recommend to place the above code in footer or bottom of your website html  -->
-    <!-- End Brevo Form -->
 
     <script defer src="script.js"></script>
 </body>
